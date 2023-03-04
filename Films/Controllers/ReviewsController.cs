@@ -18,6 +18,8 @@ public class ReviewsController : BaseApiController
     [HttpGet]
     public IActionResult Get(long movieId, string? search = null, int pageNo = 1, int pageSize = 10, string sortField = nameof(Review.Id), string sortDir = SortDir.Desc)
     {
+        if (!(movieId > 0)) return BadRequest();
+
         var pagedList = _unitOfWork.Reviews.ToPagedList(new ()
         {
             MovieId = movieId,
