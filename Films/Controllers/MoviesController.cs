@@ -1,6 +1,5 @@
 using Films.Core;
 using Films.Core.Domain;
-using Films.Core.Domain.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Films.Controllers;
@@ -57,6 +56,7 @@ public class MoviesController : BaseApiController
         item.Name = movie.Name;
         item.Description = movie.Description;
         item.ReleaseDate = movie.ReleaseDate;
+        item.Disabled = movie.Disabled;
 
         _unitOfWork.SaveChanges();
         
