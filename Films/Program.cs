@@ -1,3 +1,4 @@
+using Films;
 using Films.Core;
 using Films.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureExceptionHandler();
 
 app.UseHttpsRedirection();
 
