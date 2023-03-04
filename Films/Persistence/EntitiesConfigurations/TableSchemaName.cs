@@ -1,4 +1,4 @@
-﻿namespace Films.EntitiesConfigurations;
+﻿namespace Films.Persistence.EntitiesConfigurations;
 
 public static class TableSchemaName
 {

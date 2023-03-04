@@ -1,8 +1,8 @@
-﻿using Films.Models;
+﻿using Films.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Films.EntitiesConfigurations;
+namespace Films.Persistence.EntitiesConfigurations;
 
 public class MovieConfiguration : IEntityTypeConfiguration<Movie>
 {

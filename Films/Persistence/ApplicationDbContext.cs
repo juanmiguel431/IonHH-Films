@@ -1,7 +1,7 @@
-﻿using Films.EntitiesConfigurations;
+﻿using Films.Persistence.EntitiesConfigurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Films.DbContexts;
+namespace Films.Persistence;
 
 public class ApplicationDbContext : DbContext
 {
