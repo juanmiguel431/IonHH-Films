@@ -8,4 +8,10 @@ public class Movie
     public DateTime? ReleaseDate { get; set; }
     public DateTime CreatedDate { get; set; }
     public bool Disabled { get; set; }
+    public List<Review> Reviews { get; set; }
+
+    public Movie()
+    {
+        Reviews = new List<Review>();
+    }
 }

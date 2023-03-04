@@ -13,7 +13,9 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new MovieConfiguration());
+        modelBuilder.ApplyConfiguration(new ReviewConfiguration());
     }
     
     public DbSet<Movie> Movies { get; set; }
+    public DbSet<Review> Reviews { get; set; }
 }
