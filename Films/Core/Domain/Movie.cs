@@ -7,4 +7,5 @@ public class Movie
     public string? Description { get; set; }
     public DateTime? ReleaseDate { get; set; }
     public DateTime CreatedDate { get; set; }
+    public bool Disabled { get; set; }
 }
