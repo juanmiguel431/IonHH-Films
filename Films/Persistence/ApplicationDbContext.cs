@@ -1,4 +1,5 @@
-﻿using Films.Persistence.EntitiesConfigurations;
+﻿using Films.Core.Domain;
+using Films.Persistence.EntitiesConfigurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Films.Persistence;
@@ -13,4 +14,6 @@ public class ApplicationDbContext : DbContext
     {
         modelBuilder.ApplyConfiguration(new MovieConfiguration());
     }
+    
+    public DbSet<Movie> Movies { get; set; }
 }
