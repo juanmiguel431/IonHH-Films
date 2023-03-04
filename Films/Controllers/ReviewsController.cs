@@ -60,6 +60,7 @@ public class ReviewsController : BaseApiController
 
         item.Title = model.Title;
         item.Description = model.Description;
+        item.Rating = model.Rating;
 
         _unitOfWork.SaveChanges();
         

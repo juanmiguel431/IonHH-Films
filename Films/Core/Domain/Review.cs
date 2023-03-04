@@ -8,4 +8,5 @@ public class Review
     public string Title { get; set; }
     public string Description { get; set; }
     public DateTime CreatedDate { get; set; }
+    public Rating Rating { get; set; }
 }
