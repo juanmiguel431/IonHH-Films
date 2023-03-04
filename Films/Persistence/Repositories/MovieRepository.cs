@@ -30,7 +30,7 @@ public class MovieRepository : Repository<ApplicationDbContext, Movie, BaseFilte
         return query;
     }
 
-    private static IQueryable<Movie> GetQueryOrdered(IQueryable<Movie> query, string sortField, string sortDir)
+    private static IQueryable<Movie> GetQueryOrdered(IQueryable<Movie> query, string? sortField, string? sortDir)
     {
         if (string.IsNullOrEmpty(sortField)) return query;
 
