@@ -41,9 +41,10 @@ public class ReviewRepository : Repository<ApplicationDbContext, Review, ReviewF
 
         query = sortField switch
         {
-            nameof(Movie.Id) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.Id) : query.OrderBy(p => p.Id),
-            nameof(Movie.Name) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.Title) : query.OrderBy(p => p.Title),
-            nameof(Movie.CreatedDate) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.CreatedDate) : query.OrderBy(p => p.CreatedDate),
+            nameof(Review.Id) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.Id) : query.OrderBy(p => p.Id),
+            nameof(Review.Title) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.Title) : query.OrderBy(p => p.Title),
+            nameof(Review.Rating) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.Rating) : query.OrderBy(p => p.Rating),
+            nameof(Review.CreatedDate) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.CreatedDate) : query.OrderBy(p => p.CreatedDate),
             _ => query
         };
 
