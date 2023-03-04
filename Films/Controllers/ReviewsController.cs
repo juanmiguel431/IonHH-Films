@@ -1,26 +1,27 @@
 using Films.Core;
 using Films.Core.Domain;
+using Films.Core.Domain.Dtos;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Films.Controllers;
 
-public class MoviesController : BaseApiController
+public class ReviewsController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public MoviesController(IUnitOfWork unitOfWork)
+    public ReviewsController(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
     
     [HttpGet]
-    public IActionResult Get(string? search = null, bool? disabled = null,
-        int pageNo = 1, int pageSize = 10, string sortField = nameof(Movie.Id), string sortDir = SortDir.Desc)
+    public IActionResult Get(long movieId, string? search = null, int pageNo = 1, int pageSize = 10, string sortField = nameof(Review.Id), string sortDir = SortDir.Desc)
     {
-        var pagedList = _unitOfWork.Movies.ToPagedList(new ()
+        var pagedList = _unitOfWork.Reviews.ToPagedList(new ()
         {
+            MovieId = movieId,
             Search = search,
-            Disabled = disabled,
             PageNo = pageNo,
             PageSize = pageSize,
             SortField = sortField,
@@ -32,31 +33,31 @@ public class MoviesController : BaseApiController
     }
     
     [HttpPost]
-    public IActionResult Add(Movie model)
+    public IActionResult Add(ReviewDto model)
     {
-        model.CreatedDate = DateTime.UtcNow;
-        _unitOfWork.Movies.Add(model);
+        var entity = model.Adapt<Review>();
+        entity.CreatedDate = DateTime.UtcNow;
+
+        _unitOfWork.Reviews.Add(entity);
 
         _unitOfWork.SaveChanges();
 
-        var result = OperationResult.CreateSuccessMessage(model);
+        var result = OperationResult.CreateSuccessMessage(entity);
 
-        var uri = new Uri(GetAbsoluteUri(model.Id.ToString()));
+        var uri = new Uri(GetAbsoluteUri(entity.Id.ToString()));
         return Created(uri, result);
     }
 
     [HttpPatch("{id:long}")]
-    public IActionResult Update(Movie model, long id)
+    public IActionResult Update(ReviewDto model, long id)
     {
         if (model.Id != id) return BadRequest();
 
-        var item = _unitOfWork.Movies.SingleOrDefault(p => p.Id == id);
+        var item = _unitOfWork.Reviews.SingleOrDefault(p => p.Id == id);
         if (item is null) return NotFound();
 
-        item.Name = model.Name;
+        item.Title = model.Title;
         item.Description = model.Description;
-        item.ReleaseDate = model.ReleaseDate;
-        item.Disabled = model.Disabled;
 
         _unitOfWork.SaveChanges();
         
@@ -67,7 +68,7 @@ public class MoviesController : BaseApiController
     [HttpGet("{id:long}")]
     public IActionResult GetById(long id)
     {
-        var item = _unitOfWork.Movies.SingleOrDefault(p => p.Id == id);
+        var item = _unitOfWork.Reviews.SingleOrDefault(p => p.Id == id);
         if (item is null) return NotFound();
 
         var result = OperationResult.CreateSuccessMessage(item);
@@ -77,10 +78,10 @@ public class MoviesController : BaseApiController
     [HttpDelete("{id:long}")]
     public IActionResult Delete(long id)
     {
-        var item = _unitOfWork.Movies.SingleOrDefault(p => p.Id == id);
+        var item = _unitOfWork.Reviews.SingleOrDefault(p => p.Id == id);
         if (item is null) return NotFound();
         
-        _unitOfWork.Movies.Remove(item);
+        _unitOfWork.Reviews.Remove(item);
         _unitOfWork.SaveChanges();
 
         var result = OperationResult.CreateSuccessMessage();
