@@ -25,21 +25,21 @@ public class MovieRepository : Repository<ApplicationDbContext, Movie, BaseFilte
             query = query.Where(p => p.Name.ToLower().Contains(searchText));
         }
         
-        query = GetQueryOrdered(filter, query);
+        query = GetQueryOrdered(query, filter.SortField, filter.SortDir);
 
         return query;
     }
 
-    private static IQueryable<Movie> GetQueryOrdered(BaseFilter filter, IQueryable<Movie> query)
+    private static IQueryable<Movie> GetQueryOrdered(IQueryable<Movie> query, string sortField, string sortDir)
     {
-        if (string.IsNullOrEmpty(filter.SortField)) return query;
+        if (string.IsNullOrEmpty(sortField)) return query;
 
-        query = filter.SortField switch
+        query = sortField switch
         {
-            nameof(Movie.Id) => filter.SortDir == SortDir.Desc ? query.OrderByDescending(p => p.Id) : query.OrderBy(p => p.Id),
-            nameof(Movie.Name) => filter.SortDir == SortDir.Desc ? query.OrderByDescending(p => p.Name) : query.OrderBy(p => p.Name),
-            nameof(Movie.CreatedDate) => filter.SortDir == SortDir.Desc ? query.OrderByDescending(p => p.CreatedDate) : query.OrderBy(p => p.CreatedDate),
-            nameof(Movie.ReleaseDate) => filter.SortDir == SortDir.Desc ? query.OrderByDescending(p => p.ReleaseDate) : query.OrderBy(p => p.ReleaseDate),
+            nameof(Movie.Id) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.Id) : query.OrderBy(p => p.Id),
+            nameof(Movie.Name) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.Name) : query.OrderBy(p => p.Name),
+            nameof(Movie.CreatedDate) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.CreatedDate) : query.OrderBy(p => p.CreatedDate),
+            nameof(Movie.ReleaseDate) => sortDir == SortDir.Desc ? query.OrderByDescending(p => p.ReleaseDate) : query.OrderBy(p => p.ReleaseDate),
             _ => query
         };
 
