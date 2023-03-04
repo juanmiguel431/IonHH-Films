@@ -1,5 +1,6 @@
 using Films.Core;
 using Films.Core.Domain;
+using Films.Core.Domain.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Films.Controllers;
@@ -14,9 +15,16 @@ public class MoviesController : BaseApiController
     }
     
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult Get(string? search = null, int pageNo = 1, int pageSize = 10, string sortField = nameof(Movie.Id), string sortDir = SortDir.Desc)
     {
-        var movies = _unitOfWork.Movies.GetAll();
+        var movies = _unitOfWork.Movies.ToPagedList(new BaseFilter()
+        {
+            Search = search,
+            PageNo = pageNo,
+            PageSize = pageSize,
+            SortField = sortField,
+            SortDir = sortDir
+        });
 
         var result = OperationResult.CreateSuccessMessage(movies);
         return Ok(result);
