@@ -15,11 +15,13 @@ public class MoviesController : BaseApiController
     }
     
     [HttpGet]
-    public IActionResult Get(string? search = null, int pageNo = 1, int pageSize = 10, string sortField = nameof(Movie.Id), string sortDir = SortDir.Desc)
+    public IActionResult Get(string? search = null, bool? disabled = null,
+        int pageNo = 1, int pageSize = 10, string sortField = nameof(Movie.Id), string sortDir = SortDir.Desc)
     {
-        var movies = _unitOfWork.Movies.ToPagedList(new BaseFilter()
+        var movies = _unitOfWork.Movies.ToPagedList(new ()
         {
             Search = search,
+            Disabled = disabled,
             PageNo = pageNo,
             PageSize = pageSize,
             SortField = sortField,

@@ -4,19 +4,24 @@ using Films.Core.Repositories;
 
 namespace Films.Persistence.Repositories;
 
-public class MovieRepository : Repository<ApplicationDbContext, Movie, BaseFilter> , IMovieRepository
+public class MovieRepository : Repository<ApplicationDbContext, Movie, MovieFilter> , IMovieRepository
 {
     public MovieRepository(ApplicationDbContext context) : base(context)
     {
     }
 
-    protected override IQueryable<Movie> GetQuery(BaseFilter filter)
+    protected override IQueryable<Movie> GetQuery(MovieFilter filter)
     {
         IQueryable<Movie> query = Context.Movies;
 
         if (filter.Id.HasValue)
         {
             query = query.Where(p => p.Id == filter.Id);
+        }
+        
+        if (filter.Disabled.HasValue)
+        {
+            query = query.Where(p => p.Disabled == filter.Disabled);
         }
 
         if (!string.IsNullOrWhiteSpace(filter.Search))

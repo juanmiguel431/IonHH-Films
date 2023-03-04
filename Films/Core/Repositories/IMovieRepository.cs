@@ -3,6 +3,6 @@ using Films.Core.Domain.Filters;
 
 namespace Films.Core.Repositories;
 
-public interface IMovieRepository : IRepository<Movie, BaseFilter>
+public interface IMovieRepository : IRepository<Movie, MovieFilter>
 {
 }
