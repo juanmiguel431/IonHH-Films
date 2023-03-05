@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Films", "Films\Films.csproj", "{37A28EE8-C4D5-425E-8673-159E2784787A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Films.Tests", "Films.Tests\Films.Tests.csproj", "{28086D61-B660-4B4D-8C94-05A9771FB0F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Films.UnitTests", "Films.UnitTests\Films.UnitTests.csproj", "{28086D61-B660-4B4D-8C94-05A9771FB0F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

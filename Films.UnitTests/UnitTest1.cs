@@ -1,4 +1,4 @@
-namespace Films.Tests
+namespace Films.UnitTests
 {
     public class Tests
     {
