@@ -2,6 +2,8 @@
 using Films.Controllers;
 using Films.Core;
 using Films.Core.Domain;
+using Films.Core.Domain.Filters;
+using Films.Core.Domain.Pagination;
 using Films.Core.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -213,5 +215,30 @@ public class MoviesControllerTests : BaseControllerTests
         Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
         var value = result.Value as OperationResult;
         Assert.That(value.IsSuccess, Is.True);
+    }
+    
+    [Test]
+    public void Get_TheResultIsPaginated()
+    {
+        // Arrange
+        SetRequestPath($"/api/Movies");
+        var movies = new List<Movie>();
+        var paginatedList = new PaginatedList<Movie>(movies.AsReadOnly(), new PaginationInfo(1, 10, 1, 1)); 
+        _repository.Setup(s => s.ToPagedList(It.IsAny<MovieFilter>())).Returns(paginatedList);
+
+        // Act
+        var result = _controller.Get() as OkObjectResult;
+
+        // Assert
+        _repository.Verify(a => a.ToPagedList(It.IsAny<MovieFilter>()));
+        
+        Assert.That(result, Is.TypeOf<OkObjectResult>());
+        Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
+        
+        var value = result.Value as OperationResult;
+        Assert.That(value.IsSuccess, Is.True);
+        
+        var data = value.Data as PaginatedList<Movie>;
+        Assert.That(data, Is.TypeOf<PaginatedList<Movie>>());
     }
 }
